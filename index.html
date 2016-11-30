@@ -1,22 +1,43 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="movieShelf" lang="en">
 <head>
-	<title>Test app</title>
+	<meta charset="UTF-8">
+	<title>MovieShelf</title>
 	
 	<!-- STYLESHEETS -->
-	<link rel="stylesheet" href="css/styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
+<body ng-controller="mainCtrl">
 
-
-
-
+	<header>
+		<span class="title">MovieShelf</span>
+		<nav>
+			<ul>
+				<li><a ui-sref='search'>Search Movies</a></li>
+				<li><a ui-sref='home'>Go To Shelf</a></li>
+				<li><a ui-sref='details'>Details TEST</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<ui-view></ui-view>
+	</main>
 
 	
-	<!-- SCRIPTS -->
+	<!-- jQuery and Angular Scripts, including ui-router -->
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+	<!-- Custom Scripts -->
 	<script src="js/app.js"></script>
+	<script src="js/services/localStorageService.js"></script>
+	<script src="js/services/omdbService.js"></script>
+	<script src="js/controllers/mainCtrl.js"></script>
+	<script src="js/controllers/searchCtrl.js"></script>
+	<script src="js/controllers/shelfCtrl.js"></script>
+
 </body>
 </html>

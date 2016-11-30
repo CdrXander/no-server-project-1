@@ -8,14 +8,15 @@ Keep track of movies you've seen and want to see.
 ##Project Structure
 *	index.html
 *	/css
-	*	styles.css
+	*	main.css
 *	/img
 *	/js
 	*	app.js
-	*	/controller
+	*	/controllers
 		*	shelfCtrl.js
+		*	searchCtrl.js
 		*	mainCtrl.js
-	*	/service	
+	*	/services	
 		*	omdbService.js
 		*	localStorageService.js
 *	/views

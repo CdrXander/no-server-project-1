@@ -1,0 +1,98 @@
+* {
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+body {
+	margin: 0;
+}
+
+main {
+	margin-top: 12vh;
+}
+
+header {
+	background-color: rgba(10,10,10,.80);
+	width: 100%;
+	height: 10vh;
+	min-height: 40px;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	font-family: 'Arvo', serif;
+	justify-content: space-between;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+nav {
+	align-items: center;
+	justify-content: flex-end;
+}
+
+nav li {
+	float: right;
+	font-size: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+nav li a {
+	color:white;
+}
+
+
+/*CLASSES*/
+
+.nav-list {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+
+}
+
+.title {
+	color:white;
+	font-size: 30px;
+	
+}
+
+.shelf-container {
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+}
+
+.shelf {
+	border:1px solid black;
+	border-radius: 10px;
+	padding: 10px;
+	flex-wrap: wrap;
+	width: 40vw;
+	justify-content: space-around;
+	align-content: flex-start;
+}
+
+.shelf h3 {
+	text-align: center;
+}
+
+.cover-img {
+	width: 120px;
+}
+
+.cover-img-lrg {
+	width: 360px;
+}
+
+.cover {
+	display: inline-block;
+	margin: 5px;
+	background-color: black;
+	width: 130px;
+	height: 190px;
+	border:1px solid blue;
+	border-radius: 5px;
+}
