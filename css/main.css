@@ -7,6 +7,11 @@ body {
 	margin: 0;
 }
 
+p {
+	-webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
 main {
 	margin-top: 12vh;
 }
@@ -16,9 +21,13 @@ header {
 	width: 100%;
 	height: 10vh;
 	min-height: 40px;
+	
 	display: flex;
 	align-items: center;
-	position: absolute;
+	
+	position: fixed;
+	z-index: 999;
+
 	font-family: 'Arvo', serif;
 	justify-content: space-between;
 	padding-left: 10px;
@@ -28,6 +37,12 @@ header {
 nav {
 	align-items: center;
 	justify-content: flex-end;
+	overflow: visible;
+}
+
+ul {
+	overflow: visible;
+	list-style-type: none;;
 }
 
 nav li {
@@ -35,11 +50,9 @@ nav li {
 	font-size: 20px;
 	margin-left: 10px;
 	margin-right: 10px;
+	overflow: visible;
 }
 
-nav li a {
-	color:white;
-}
 
 
 /*CLASSES*/
@@ -71,7 +84,7 @@ nav li a {
 	padding: 10px;
 	flex-wrap: wrap;
 	width: 40vw;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-content: flex-start;
 }
 
@@ -81,18 +94,39 @@ nav li a {
 
 .cover-img {
 	width: 120px;
+	height: auto;
 }
 
 .cover-img-lrg {
-	width: 360px;
+	width:100%;
+	max-width: 360px;
+	height: auto;
 }
 
+
 .cover {
-	display: inline-block;
-	margin: 5px;
+	display: inline-flex;
+	justify-content: center;
 	background-color: black;
 	width: 130px;
 	height: 190px;
 	border:1px solid blue;
 	border-radius: 5px;
+}
+
+
+.result-shelf {
+	display: flex;
+	align-content: flex-start;
+}
+
+.result-box {
+	width: 140px;
+	height: auto;
+	margin: 0;
+	margin-bottom: 5px;
+	padding: 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+	justify-content: center;
 }
