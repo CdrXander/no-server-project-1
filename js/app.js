@@ -16,8 +16,9 @@ angular.module('movieShelf', ['ui.router']).config(function($stateProvider, $url
 			controller: 'searchCtrl'
 		})
 		.state('details', {
-			url: '/details',
-			templateUrl: './views/detail.html'
+			url: '/details/:id',
+			templateUrl: './views/detail.html',
+			controller: 'detailCtrl'
 		})
 
 });

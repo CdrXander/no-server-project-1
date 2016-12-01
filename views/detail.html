@@ -2,9 +2,14 @@
 
 <section class="shelf-container">
 	<div class="shelf">
-		<img class="cover-img-lrg" src="./img/test_cover_1.jpg"/>
+		<img class="cover-img-lrg" ng-src="{{movie.Poster}}"/>
 	</div>
 	<div class="shelf">
-
+		<h2>{{movie.title}}</h2>
+		<p>Year: {{movie.Year}}</p>
+		<p>Rating: {{movie.Rated}}</p>
+		<p>Tomato Meter: {{movie.tomatoMeter}}%</p>
+		<p>IMDb Rating: {{movie.imdbRating}}/10</p>
+		<p>Plot Summary: {{movie.Plot}}</p>
 	</div>
 </section>
