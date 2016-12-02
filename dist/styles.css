@@ -1,13 +1,7 @@
-a:link, a:visited, a:hover, a:active {
-  text-decoration: none;
-  color: white; }
-
-nav li a {
-  padding: 5px;
-  border-radius: 5px; }
-
-nav li a:hover {
-  background-color: #5F5F5F; }
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center; }
 
 * {
   box-sizing: border-box;
@@ -41,17 +35,24 @@ nav {
   align-items: center;
   justify-content: flex-end;
   overflow: visible; }
+  nav li {
+    float: right;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: visible; }
+    nav li a {
+      padding: 5px;
+      border-radius: 5px; }
+    nav li a:hover {
+      background-color: #5F5F5F; }
+  nav a:link, nav a:visited, nav a:hover, nav a:active {
+    text-decoration: none;
+    color: white; }
 
 ul {
   overflow: visible;
   list-style-type: none; }
-
-nav li {
-  float: right;
-  font-size: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  overflow: visible; }
 
 /*CLASSES*/
 .nav-list {

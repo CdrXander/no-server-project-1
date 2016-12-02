@@ -2,23 +2,33 @@
 
 <section class="shelf-container">
 	<!-- Films to See -->
-	<div class="shelf">
+	<div class="result-shelf shelf">
 		<h3>Films I want to see</h3>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_1.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_2.jpg"/></span>
+		<br/>
+
+		<span ng-repeat="movie in watchMovies" class="result-box" >
+			<div class="cover">
+				<img class="cover-img" ng-src="{{movie.Poster}}"/>
+			</div>
+			<p>{{movie.Title}}</p>
+			<p> Year: {{movie.Year}}</p>
+			<a ui-sref="details({id: movie.imdbID})"><button>See Details</button></a>
+		</span>
 	</div>
 
+
+
 	<!-- Films Seen -->
-	<div class="shelf">
-		<h3>Films I own</h3>
-		<span class="cover"></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_1.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_3.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_2.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_4.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_2.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_3.jpg"/></span>
-		<span class="cover"><img class="cover-img" src="./img/test_cover_1.jpg"/></span>
+	<div class="result-shelf shelf">
+		<h3>Films I own</h3><br/>
+		<span ng-repeat="movie in ownedMovies" class='result-box'>
+			<div class="cover">
+				<img class="cover-img" ng-src="{{movie.Poster}}"/>
+			</div>
+			<p>{{movie.Title}}</p>
+			<p> Year: {{movie.Year}}</p>
+			<a ui-sref="details({id: movie.imdbID})"><button>See Details</button></a>
+		</span>
 
 	</div>
 </section>
