@@ -1,0 +1,10 @@
+<a ui-sref="details({id: movie.imdbID})">
+	<div class="cover">
+		<img class="cover-img" ng-src="{{movie.Poster}}"/>
+	</div>
+</a>
+<p>{{movie.Title}}</p>
+<p> Year: {{movie.Year}}</p>
+<button ng-click="addMovieToOwned(movie.imdbID, movie.watch)">Add to Owned Movies</button>
+<button ng-click="addMovieToWatch(movie.imdbID, movie.own)">Want to Watch</button>
+<buttom ng-click=""

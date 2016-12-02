@@ -1,6 +1,7 @@
 angular.module('movieShelf').controller('shelfCtrl', function($scope, omdbService, localStorageService) {
 	
 
+
 	//Load the extended film data asynchronously
 	var mergeData = function(localMovie) {
 		omdbService.getMovieDetails(localMovie.id).then(function(omdbMovie) {
@@ -24,33 +25,13 @@ angular.module('movieShelf').controller('shelfCtrl', function($scope, omdbServic
 		for(var i = 0; i < savedMovies.length; i++) {
 			mergeData(savedMovies[i]);
 		}
-	}();
-
-
-
-
-
-	//Add a film to the Owned_Movies array
-	$scope.addMovieToOwned = function(id, watch) {
-		var movie = {
-			id:id,
-			own:true,
-			watch:watch
-		}
-
-		$scope.savedMovies.push(movie);
 	}
+	loadMovieData();
 
 
-	//Add a film to the To_Watch_Movies array 
-	$scope.addMovieToWatch = function(id, own) {
-		var movie = {
-			id:id,
-			own: own,
-			watch:true
-		}
-
-		$scope.savedMovies.push(movie);
+	$scope.clearShelves = function() {
+		localStorageService.clearShelves();
+		loadMovieData();
 	}
 
 });

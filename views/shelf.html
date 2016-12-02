@@ -1,33 +1,20 @@
 <h1>Film Shelf</h1>
+<button ng-click="clearShelves()">Clear Shelf</button>
 
 <section class="shelf-container">
 	<!-- Films to See -->
 	<div class="result-shelf shelf">
 		<h3>Films I want to see</h3>
-		<br/>
-
 		<span ng-repeat="movie in watchMovies" class="result-box" >
-			<div class="cover">
-				<img class="cover-img" ng-src="{{movie.Poster}}"/>
-			</div>
-			<p>{{movie.Title}}</p>
-			<p> Year: {{movie.Year}}</p>
-			<a ui-sref="details({id: movie.imdbID})"><button>See Details</button></a>
+			<movie-cover movie="movie"></movie-cover>
 		</span>
 	</div>
 
-
-
-	<!-- Films Seen -->
+	<!-- Films Owned -->
 	<div class="result-shelf shelf">
-		<h3>Films I own</h3><br/>
+		<h3>Films I own</h3>
 		<span ng-repeat="movie in ownedMovies" class='result-box'>
-			<div class="cover">
-				<img class="cover-img" ng-src="{{movie.Poster}}"/>
-			</div>
-			<p>{{movie.Title}}</p>
-			<p> Year: {{movie.Year}}</p>
-			<a ui-sref="details({id: movie.imdbID})"><button>See Details</button></a>
+			<movie-cover movie="movie"></movie-cover>
 		</span>
 
 	</div>

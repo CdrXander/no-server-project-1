@@ -7,12 +7,7 @@
 	</div>
 	<div class="result-shelf shelf">
 		<span ng-repeat="movie in movies" class='result-box'>
-			<div class="cover">
-				<img class="cover-img" ng-src="{{movie.Poster}}"/>
-			</div>
-			<p>{{movie.Title}}</p>
-			<p> Year: {{movie.Year}}</p>
-			<a ui-sref="details({id: movie.imdbID})"><button>See Details</button></a>
+			<movie-cover movie="movie"></movie-cover>
 		</span>
 	</div>
 </section>

@@ -35,7 +35,7 @@ angular.module('movieShelf').controller('mainCtrl', function ($scope) {
 });
 'use strict';
 
-angular.module('movieShelf').controller('searchCtrl', function ($scope, omdbService) {
+angular.module('movieShelf').controller('searchCtrl', function ($scope, omdbService, localStorageService) {
 	$scope.test = "Test Search Ctrl";
 
 	$scope.searchForMovie = function () {
@@ -64,7 +64,7 @@ angular.module('movieShelf').controller('shelfCtrl', function ($scope, omdbServi
 	};
 
 	//Initial load
-	var loadMovieData = function () {
+	var loadMovieData = function loadMovieData() {
 		$scope.ownedMovies = [];
 		$scope.watchMovies = [];
 
@@ -72,65 +72,81 @@ angular.module('movieShelf').controller('shelfCtrl', function ($scope, omdbServi
 		for (var i = 0; i < savedMovies.length; i++) {
 			mergeData(savedMovies[i]);
 		}
-	}();
-
-	//Add a film to the Owned_Movies array
-	$scope.addMovieToOwned = function (id, watch) {
-		var movie = {
-			id: id,
-			own: true,
-			watch: watch
-		};
-
-		$scope.savedMovies.push(movie);
 	};
+	loadMovieData();
 
-	//Add a film to the To_Watch_Movies array 
-	$scope.addMovieToWatch = function (id, own) {
-		var movie = {
-			id: id,
-			own: own,
-			watch: true
-		};
-
-		$scope.savedMovies.push(movie);
+	$scope.clearShelves = function () {
+		localStorageService.clearShelves();
+		loadMovieData();
 	};
 });
 'use strict';
 
 angular.module('movieShelf').service('localStorageService', function (omdbService) {
 
+	var LOCAL_STORAGE_NAME = "movieList";
+
 	var testData = [{ id: 'tt0080684', own: true, watch: false }, { id: 'tt0848228', own: true, watch: false }, { id: 'tt1663662', own: true, watch: true }, { id: 'tt1675434', own: true, watch: true }, { id: 'tt0360717', own: false, watch: true }, { id: 'tt0108052', own: false, watch: true }];
 
-	//Public end point
+	//GET SAVED MOVIES - public end point to get all saved movies
 	this.getSavedMovies = function () {
-		// return combineMovies();
 		return loadMovieData();
 	};
 
-	//Get saved data from local storage. For now, return dummy data
+	//LOAD MOVIE DATA - Load movie data from local storage
 	var loadMovieData = function loadMovieData() {
-		return testData;
-	};
-
-	//Go through all the local data, extending each one with obdb data
-	var combineMovies = function combineMovies() {
-		var localMovies = loadMovieData();
-		var combinedMovieData = [];
-		for (var i = 0; i < localMovies.length; i++) {
-			combinedMovieData.push(mergeData(localMovies[i]));
+		var localMovieData;
+		if (localStorage.movieList) {
+			localMovieData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NAME));
+		} else {
+			//TODO: CHANGE FOR PROD
+			localMovieData = testData;
 		}
-		return combinedMovieData;
+		return localMovieData;
 	};
 
-	//This function gets the extended data for a local movie, combines it
-	// with the local data, and returns the combined object
-	var mergeData = function mergeData(localMovie) {
-		omdbService.getMovieDetails(localMovie.id).then(function (omdbMovie) {
-			var fullMovie = {};
-			jQuery.extend(fullMovie, localMovie, omdbMovie);
-			return fullMovie;
+	//SAVE MOVIE - save a movie object to local local storage 	=	=
+	this.saveMovie = function (movieObj) {
+		//Get the local movie data
+		var localMovieData = loadMovieData();
+
+		//if id exists in array, update it
+		var index = localMovieData.findIndex(function (element) {
+			return element.id == movieObj.id;
 		});
+
+		if (index > 0) {
+			if (movieObj.own != undefined) {
+				localMovieData[index].own = movieObj.own;
+			}
+			if (movieObj.watch != undefined) {
+				localMovieData[index].watch = movieObj.watch;
+			}
+		} else {
+			localMovieData.push(movieObj);
+		}
+
+		//Finally, save the data to local storage
+		localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(localMovieData));
+	};
+
+	//DELETE MOVIE - remove movie by movieId	=	=	=
+	this.deleteMovie = function (movieId) {
+		//Get the local movie data
+		var localMovieData = loadMovieData();
+		//find the id in the array
+		var index = localMovieData.findIndex(function (element) {
+			element.id = movieObj.id;
+		});
+		if (index > 0) {
+			localMovieData.splice(index, 1);
+			localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(localMovieData));
+		}
+	};
+
+	//CLEAR SHELVES - remove all movieShelf		=	=	=
+	this.clearShelves = function () {
+		localStorage.removeItem(LOCAL_STORAGE_NAME);
 	};
 });
 'use strict';
@@ -160,5 +176,38 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
     });
     return deferred.promise;
   };
+});
+'use strict';
+
+angular.module('movieShelf').directive('movieCover', function () {
+
+	var coverController = ['$scope', function ($scope, localStorageService) {
+		//Add a film to the Owned_Movies array
+		$scope.addMovieToOwned = function (id, watch) {
+			var movie = {
+				id: id,
+				own: true
+			};
+			localStorageService.saveMovie(movie);
+		};
+
+		//Add a film to the To_Watch_Movies array 
+		$scope.addMovieToWatch = function (id, own) {
+			var movie = {
+				id: id,
+				watch: true
+			};
+			localStorageService.saveMovie(movie);
+		};
+	}];
+
+	return {
+		restrict: "E",
+		templateUrl: './directives/coverDir.html',
+		scope: {
+			movie: '='
+		},
+		controller: coverController
+	};
 });
 //# sourceMappingURL=bundle.js.map

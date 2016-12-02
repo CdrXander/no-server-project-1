@@ -28,7 +28,7 @@ gulp.task('clean', function(cb) {
 })
 
 gulp.task('build-js', function() {
-   return gulp.src('js/**/*.js')               
+   return gulp.src(['js/**/*.js','./directives/*.js'])               
       .pipe(sourcemaps.init())					//Keep source files seperate in debugger
       .pipe(print())                        	//Copy into dist
       .pipe(babel({ presets: ['es2015'] }))
@@ -46,5 +46,12 @@ gulp.task('build', ['build-css','build-js'], function() {
 })
 
 gulp.task('watch', function() {
-    return gulp.watch(['./index.html','./views/*.html', './css/*.*css', './js/**/*.js'], ['build']);
+    return gulp.watch([
+        './index.html',
+        './views/*.html', 
+        './css/*.*css', 
+        './js/**/*.js',
+        './directives/*.js',
+        './directives/*.html'
+        ], ['build']);
 });

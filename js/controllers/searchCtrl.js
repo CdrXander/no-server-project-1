@@ -1,4 +1,4 @@
-angular.module('movieShelf').controller('searchCtrl', function($scope, omdbService) {
+angular.module('movieShelf').controller('searchCtrl', function($scope, omdbService, localStorageService) {
 	$scope.test = "Test Search Ctrl";
 
 
@@ -8,5 +8,4 @@ angular.module('movieShelf').controller('searchCtrl', function($scope, omdbServi
 			console.log($scope.movies);
 		})
 	}
-
 });
