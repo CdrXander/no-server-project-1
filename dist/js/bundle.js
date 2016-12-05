@@ -179,11 +179,11 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('movieShelf').directive('movieCover', function () {
+angular.module('movieShelf').directive('movieCover', function (localStorageService) {
 
-	var coverController = ['$scope', function ($scope, localStorageService) {
+	var coverController = ['$scope', 'localStorageService', function ($scope, localStorageService) {
 		//Add a film to the Owned_Movies array
-		$scope.addMovieToOwned = function (id, watch) {
+		$scope.addMovieToOwned = function (id) {
 			var movie = {
 				id: id,
 				own: true
@@ -192,7 +192,7 @@ angular.module('movieShelf').directive('movieCover', function () {
 		};
 
 		//Add a film to the To_Watch_Movies array 
-		$scope.addMovieToWatch = function (id, own) {
+		$scope.addMovieToWatch = function (id) {
 			var movie = {
 				id: id,
 				watch: true
