@@ -179,7 +179,7 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('movieShelf').directive('movieDisplay', function (localStorageService) {
+angular.module('movieShelf').directive('movieDisplay', function () {
 
 	var coverController = ['$scope', 'localStorageService', function ($scope, localStorageService) {
 		//Add a film to the Owned_Movies array

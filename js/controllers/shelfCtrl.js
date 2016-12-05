@@ -1,4 +1,5 @@
-angular.module('movieShelf').controller('shelfCtrl', function($scope, omdbService, localStorageService) {
+angular.module('movieShelf')
+.controller('shelfCtrl', function($scope, omdbService, localStorageService) {
 	
 
 
