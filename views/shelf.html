@@ -1,21 +1,16 @@
 <h1>Film Shelf</h1>
-<button ng-click="clearShelves()">Clear Shelf</button>
+<!-- <button ng-click="clearShelves()">Clear Shelf</button> -->
 
 <section class="shelf-container">
 	<!-- Films to See -->
-	<div class="result-shelf shelf">
+	<div class="shelf-border">
 		<h3>Films I want to see</h3>
-		<span ng-repeat="movie in watchMovies" class="result-box" >
-			<movie-cover movie="movie"></movie-cover>
-		</span>
+		<movie-display movies="watchMovies"></movie-display>
 	</div>
 
 	<!-- Films Owned -->
-	<div class="result-shelf shelf">
+	<div class="shelf-border">
 		<h3>Films I own</h3>
-		<span ng-repeat="movie in ownedMovies" class='result-box'>
-			<movie-cover movie="movie"></movie-cover>
-		</span>
-
+		<movie-display movies="ownedMovies"></movie-display>
 	</div>
 </section>

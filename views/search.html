@@ -1,13 +1,11 @@
 <h1>Film Searches</h1>
 
 <section class="shelf-container">
-	<div class="shelf">
+	<div class="shelf-border">
 		<input type="text" ng-model="searchTitle"/>
 		<button ng-click="searchForMovie()">Search</button>
 	</div>
-	<div class="result-shelf shelf">
-		<span ng-repeat="movie in movies" class='result-box'>
-			<movie-cover movie="movie"></movie-cover>
-		</span>
+	<div class="shelf-border">
+		<movie-display movies="movies"></movie-display>
 	</div>
 </section>

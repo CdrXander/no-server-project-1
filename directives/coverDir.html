@@ -1,9 +1,18 @@
-<a ui-sref="details({id: movie.imdbID})">
-	<div class="cover">
-		<img class="cover-img" ng-src="{{movie.Poster}}"/>
-	</div>
-</a>
-<p>{{movie.Title}}</p>
-<p> Year: {{movie.Year}}</p>
-<button ng-click="addMovieToOwned(movie.imdbID)">Add to Owned Movies</button>
-<button ng-click="addMovieToWatch(movie.imdbID)">Want to Watch</button>
+
+<div class="shelf">
+	<img src="./img/empty_bookshelf_top.jpg" class="shelf-top" />
+	<span ng-repeat="movie in movies" class='result-box'>
+		<a ui-sref="details({id: movie.imdbID})">
+			<div class="cover">
+				<img class="cover-img" ng-src="{{movie.Poster}}"/>
+			</div>
+		</a>
+		<p>{{movie.Title}}</p>
+		<p> Year: {{movie.Year}}</p>
+		<button ng-if="movie.own" ng-click="addMovieToOwned(movie.imdbID, movie.own)" class="col-in">Owned</button>
+		<button ng-if="!!!movie.own" ng-click="addMovieToOwned(movie.imdbID, movie.own)" class="col-out">Own?</button>
+		
+		<button ng-if="movie.watch" ng-click="addMovieToOwned(movie.imdbID, movie.watch)" class="col-in">Watch</button>
+		<button ng-if="!!!movie.watch" ng-click="addMovieToOwned(movie.imdbID, movie.watch)" class="col-out">Watch?</button>
+	</span>
+</div>	

@@ -179,23 +179,25 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('movieShelf').directive('movieCover', function (localStorageService) {
+angular.module('movieShelf').directive('movieDisplay', function (localStorageService) {
 
 	var coverController = ['$scope', 'localStorageService', function ($scope, localStorageService) {
 		//Add a film to the Owned_Movies array
-		$scope.addMovieToOwned = function (id) {
+		$scope.addMovieToOwned = function (id, own) {
+			own = !!own; //To deal w/ undefined on initial load
 			var movie = {
 				id: id,
-				own: true
+				own: !own
 			};
 			localStorageService.saveMovie(movie);
 		};
 
 		//Add a film to the To_Watch_Movies array 
-		$scope.addMovieToWatch = function (id) {
+		$scope.addMovieToWatch = function (id, watch) {
+			watch = !!watch; //To deal w/ undefined on initial load
 			var movie = {
 				id: id,
-				watch: true
+				watch: !watch
 			};
 			localStorageService.saveMovie(movie);
 		};
@@ -205,7 +207,7 @@ angular.module('movieShelf').directive('movieCover', function (localStorageServi
 		restrict: "E",
 		templateUrl: './directives/coverDir.html',
 		scope: {
-			movie: '='
+			movies: '='
 		},
 		controller: coverController
 	};

@@ -5,6 +5,12 @@
 
 body {
 	margin: 0;
+	background-color:black;
+	background-image:url("./../img/theater-seats.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% auto;
+	background-position:0 10vh;
 }
 
 p {
@@ -32,7 +38,14 @@ header {
 	justify-content: space-between;
 	padding-left: 10px;
 	padding-right: 10px;
+
+	a:link, a:visited, a:hover, a:active {
+    	text-decoration: none;
+    	color: white;
+	}
 }
+
+
 
 nav {
 	align-items: center;
@@ -55,19 +68,12 @@ nav {
 		}
 	}
 
-	a:link, a:visited, a:hover, a:active {
-    text-decoration: none;
-    color: white;
-}
+
 }
 
 ul {
 	overflow: visible;
 	list-style-type: none;;
-}
-
-nav li {
-	
 }
 
 
@@ -86,7 +92,9 @@ nav li {
 .title {
 	color:white;
 	font-size: 30px;
-	
+	overflow:visible;
+	text-decoration: none;
+
 }
 
 .shelf-container {
@@ -95,22 +103,59 @@ nav li {
 	justify-content: space-around;
 }
 
-.shelf {
+.shelf-border {
+	position:relative;
+	display:inline-block;
 	border:1px solid black;
 	border-radius: 10px;
 	padding: 10px;
-	flex-wrap: wrap;
+	min-width: 170px;
 	width: 40vw;
-	justify-content: space-between;
-	align-content: flex-start;
+	overflow:hidden;
+
+	background-color: black;
+
+	h3 {
+		text-align: center;
+		color: white;
+	}
 }
 
-.shelf h3 {
-	text-align: center;
+.shelf {
+	display:flex;
+	align-content: flex-start;
+	flex-wrap: wrap;
+
+	background-image: url("./../img/empty_bookshelf.jpg");
+	background-size: 100% 341px;
+	background-position: 0 27px;
+	border-radius:5px;
+	
+	min-height:357px;
+	height:100%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.shelf-top {
+	display: inline-block;
+	max-height: 27px;
+	margin-left:-20px;
+	margin-right:-20px;
+}
+
+.cover {
+	display: inline-flex;
+	justify-content: center;
+	background-color: black;
+	width: 150px;
+	height: 190px;
+	border:1px solid blue;
+	border-radius: 5px;
 }
 
 .cover-img {
-	width: 120px;
+	width: auto;
 	height: auto;
 }
 
@@ -120,30 +165,33 @@ nav li {
 	height: auto;
 }
 
-
-.cover {
-	display: inline-flex;
-	justify-content: center;
-	background-color: black;
-	width: 130px;
-	height: 190px;
-	border:1px solid blue;
-	border-radius: 5px;
-}
-
-
-.result-shelf {
-	display: flex;
-	align-content: flex-start;
-}
-
 .result-box {
-	width: 140px;
-	height: auto;
-	margin: 0;
-	margin-bottom: 5px;
+	width: 170px;
+	height: 320px;
+	text-align: center;
+	overflow:hidden;
+
 	padding: 5px;
-	border: 1px solid black;
+	margin: 5px;
+	margin-bottom: 15px;
+		
+	border: 2px solid white;
 	border-radius: 5px;
-	justify-content: center;
+	background-color:#0060AA;
+	color:white;
+
+	// button {
+	// 	color:black;
+	// }
+}
+
+// Short for "In Collection"
+.col-in {
+	background-color:green;
+}
+
+
+//Short for "Not In Collection"
+.col-out {
+	background-color:red;
 }
