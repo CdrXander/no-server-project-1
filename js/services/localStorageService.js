@@ -3,12 +3,12 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 	var LOCAL_STORAGE_NAME = "movieList";
 
 	var testData = [
-						{id:'tt0080684',own:true, watch:false},
-						{id:'tt0848228',own:true, watch:false},
-						{id:'tt1663662',own:true, watch:true},
-						{id:'tt1675434',own:true, watch:true},
-						{id:'tt0360717',own:false, watch:true},
-						{id:'tt0108052',own:false, watch:true}
+						{imdbID:'tt0080684',Year:1980, own:true, watch:false,Rated:"PG",Title:"Star Wars: Episode V - The Empire Strikes Back", Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BYmViY2M2MTYtY2MzOS00YjQ1LWIzYmEtOTBiNjhlMGM0NjZjXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"},
+						{imdbID:'tt0848228',Year:2012, own:true, watch:false,Rated:"PG-13",Title:"The Avengers",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg"},
+						{imdbID:'tt1663662',Year:2013, own:true, watch:true,Rated:"PG-13",Title:"Pacific Rim",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_SX300.jpg"},
+						{imdbID:'tt1675434',Year:2011, own:true, watch:true,Rated:"R",Title:"The Intouchables",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg"},
+						{imdbID:'tt0360717',Year:2005, own:false, watch:true,Rated:"PG-13",Title:"King Kong",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMjYxYmRlZWYtMzAwNC00MDA1LWJjNTItOTBjMzlhNGMzYzk3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"},
+						{imdbID:'tt0108052',Year:1993, own:false, watch:true,Rated:"R",Title:"Schindler's List",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg"}
 					]
 
 	//GET SAVED MOVIES - public end point to get all saved movies
@@ -36,7 +36,7 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 
 		//if id exists in array, update it
 		var index = localMovieData.findIndex(function(element) {
-			return element.id == movieObj.id;
+			return element.imdbID == movieObj.imdbID;
 		})
 
 		if(index > 0) {

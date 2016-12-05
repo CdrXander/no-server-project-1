@@ -50,34 +50,41 @@ angular.module('movieShelf').controller('searchCtrl', function ($scope, omdbServ
 angular.module('movieShelf').controller('shelfCtrl', function ($scope, omdbService, localStorageService) {
 
 	//Load the extended film data asynchronously
-	var mergeData = function mergeData(localMovie) {
-		omdbService.getMovieDetails(localMovie.id).then(function (omdbMovie) {
-			var fullMovie = {};
-			jQuery.extend(fullMovie, localMovie, omdbMovie);
-			if (fullMovie.own === true) {
-				$scope.ownedMovies.push(fullMovie);
-			}
-			if (fullMovie.watch === true) {
-				$scope.watchMovies.push(fullMovie);
-			}
-		});
-	};
+	// var mergeData = function(localMovie) {
+	// 	omdbService.getMovieDetails(localMovie.id).then(function(omdbMovie) {
+	// 		var fullMovie = {};
+	// 		jQuery.extend(fullMovie, localMovie, omdbMovie);
+	// 		if(fullMovie.own === true) {
+	// 		$scope.ownedMovies.push(fullMovie);
+	// 		}
+	// 		if(fullMovie.watch === true) {
+	// 			$scope.watchMovies.push(fullMovie);
+	// 		}
+	// 	})
+	// }
 
 	//Initial load
-	var loadMovieData = function loadMovieData() {
+	$scope.loadMovieData = function () {
 		$scope.ownedMovies = [];
 		$scope.watchMovies = [];
 
 		var savedMovies = localStorageService.getSavedMovies();
 		for (var i = 0; i < savedMovies.length; i++) {
-			mergeData(savedMovies[i]);
+			if (savedMovies[i].own === true) {
+				$scope.ownedMovies.push(savedMovies[i]);
+			}
+			if (savedMovies[i].watch === true) {
+				$scope.watchMovies.push(savedMovies[i]);
+			}
+
+			//			mergeData(savedMovies[i]);
 		}
 	};
-	loadMovieData();
+	$scope.loadMovieData();
 
 	$scope.clearShelves = function () {
 		localStorageService.clearShelves();
-		loadMovieData();
+		$scope.loadMovieData();
 	};
 });
 'use strict';
@@ -86,7 +93,7 @@ angular.module('movieShelf').service('localStorageService', function (omdbServic
 
 	var LOCAL_STORAGE_NAME = "movieList";
 
-	var testData = [{ id: 'tt0080684', own: true, watch: false }, { id: 'tt0848228', own: true, watch: false }, { id: 'tt1663662', own: true, watch: true }, { id: 'tt1675434', own: true, watch: true }, { id: 'tt0360717', own: false, watch: true }, { id: 'tt0108052', own: false, watch: true }];
+	var testData = [{ imdbID: 'tt0080684', Year: 1980, own: true, watch: false, Rated: "PG", Title: "Star Wars: Episode V - The Empire Strikes Back", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BYmViY2M2MTYtY2MzOS00YjQ1LWIzYmEtOTBiNjhlMGM0NjZjXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg" }, { imdbID: 'tt0848228', Year: 2012, own: true, watch: false, Rated: "PG-13", Title: "The Avengers", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg" }, { imdbID: 'tt1663662', Year: 2013, own: true, watch: true, Rated: "PG-13", Title: "Pacific Rim", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_SX300.jpg" }, { imdbID: 'tt1675434', Year: 2011, own: true, watch: true, Rated: "R", Title: "The Intouchables", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg" }, { imdbID: 'tt0360717', Year: 2005, own: false, watch: true, Rated: "PG-13", Title: "King Kong", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjYxYmRlZWYtMzAwNC00MDA1LWJjNTItOTBjMzlhNGMzYzk3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" }, { imdbID: 'tt0108052', Year: 1993, own: false, watch: true, Rated: "R", Title: "Schindler's List", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg" }];
 
 	//GET SAVED MOVIES - public end point to get all saved movies
 	this.getSavedMovies = function () {
@@ -112,7 +119,7 @@ angular.module('movieShelf').service('localStorageService', function (omdbServic
 
 		//if id exists in array, update it
 		var index = localMovieData.findIndex(function (element) {
-			return element.id == movieObj.id;
+			return element.imdbID == movieObj.imdbID;
 		});
 
 		if (index > 0) {
@@ -183,23 +190,31 @@ angular.module('movieShelf').directive('movieDisplay', function () {
 
 	var coverController = ['$scope', 'localStorageService', function ($scope, localStorageService) {
 		//Add a film to the Owned_Movies array
-		$scope.addMovieToOwned = function (id, own) {
-			own = !!own; //To deal w/ undefined on initial load
-			var movie = {
-				id: id,
-				own: !own
+		$scope.addMovieToOwned = function (movie) {
+			movie.own = !!movie.own; //To deal w/ undefined on initial load
+			var localMovie = {
+				imdbID: movie.imdbID,
+				Title: movie.Title,
+				Poster: movie.Poster,
+				Year: movie.Year,
+				own: !movie.own
 			};
-			localStorageService.saveMovie(movie);
+			localStorageService.saveMovie(localMovie);
+			$scope.reload();
 		};
 
 		//Add a film to the To_Watch_Movies array 
-		$scope.addMovieToWatch = function (id, watch) {
-			watch = !!watch; //To deal w/ undefined on initial load
-			var movie = {
-				id: id,
-				watch: !watch
+		$scope.addMovieToWatch = function (movie) {
+			movie.watch = !!movie.watch; //To deal w/ undefined on initial load
+			var localMovie = {
+				imdbID: movie.imdbID,
+				Title: movie.Title,
+				Poster: movie.Poster,
+				Year: movie.Year,
+				watch: !movie.watch
 			};
-			localStorageService.saveMovie(movie);
+			localStorageService.saveMovie(localMovie);
+			$scope.reload();
 		};
 	}];
 
@@ -207,7 +222,8 @@ angular.module('movieShelf').directive('movieDisplay', function () {
 		restrict: "E",
 		templateUrl: './directives/coverDir.html',
 		scope: {
-			movies: '='
+			movies: '=',
+			reload: '&'
 		},
 		controller: coverController
 	};

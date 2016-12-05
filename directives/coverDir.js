@@ -2,24 +2,34 @@ angular.module('movieShelf').directive('movieDisplay', function(){
 	
 	var coverController = ['$scope', 'localStorageService', function($scope, localStorageService) {
 		//Add a film to the Owned_Movies array
-		$scope.addMovieToOwned = function(id, own) {
-			own = !!own;		//To deal w/ undefined on initial load
-			var movie = {
-				id:id,
-				own:!own
+		$scope.addMovieToOwned = function(movie) {
+			movie.own = !!movie.own;		//To deal w/ undefined on initial load
+			var localMovie = {
+				imdbID:movie.imdbID,
+				Title:movie.Title,
+				Poster:movie.Poster,
+				Year:movie.Year,
+				own:!movie.own
 			}
-			localStorageService.saveMovie(movie);
+			localStorageService.saveMovie(localMovie);
+			$scope.reload();
 		}
 
 		//Add a film to the To_Watch_Movies array 
-		$scope.addMovieToWatch = function(id, watch) {
-			watch = !!watch;	//To deal w/ undefined on initial load
-			var movie = {
-				id:id,
-				watch:!watch
+		$scope.addMovieToWatch = function(movie) {
+			movie.watch = !!movie.watch;	//To deal w/ undefined on initial load
+			var localMovie = {
+				imdbID:movie.imdbID,
+				Title:movie.Title,
+				Poster:movie.Poster,
+				Year:movie.Year,
+				watch:!movie.watch
 			}
-			localStorageService.saveMovie(movie);
+			localStorageService.saveMovie(localMovie);
+			$scope.reload();
+		
 		}
+
 	
 	}]
 
@@ -27,7 +37,8 @@ angular.module('movieShelf').directive('movieDisplay', function(){
 		restrict: "E",
 		templateUrl: './directives/coverDir.html',
 		scope: {
-			movies: '='
+			movies: '=',
+			reload: '&'
 		},
 		controller: coverController
 	}

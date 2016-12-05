@@ -138,6 +138,10 @@ ul {
   .shelf-border h3 {
     text-align: center;
     color: white; }
+  .shelf-border input {
+    color: black; }
+  .shelf-border button {
+    color: black; }
 
 .shelf {
   display: flex;

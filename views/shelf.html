@@ -1,16 +1,16 @@
 <h1>Film Shelf</h1>
-<!-- <button ng-click="clearShelves()">Clear Shelf</button> -->
+<button ng-click="clearShelves()">Clear Shelf</button>
 
 <section class="shelf-container">
 	<!-- Films to See -->
 	<div class="shelf-border">
 		<h3>Films I want to see</h3>
-		<movie-display movies="watchMovies"></movie-display>
+		<movie-display movies="watchMovies" reload="loadMovieData()"></movie-display>
 	</div>
 
 	<!-- Films Owned -->
 	<div class="shelf-border">
 		<h3>Films I own</h3>
-		<movie-display movies="ownedMovies"></movie-display>
+		<movie-display movies="ownedMovies" reload="loadMovieData()"></movie-display>
 	</div>
 </section>
