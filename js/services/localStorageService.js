@@ -11,6 +11,16 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 						{imdbID:'tt0108052',Year:1993, own:false, watch:true,Rated:"R",Title:"Schindler's List",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg"}
 					]
 
+	//Eliminates the problem of dead data
+	var cleanData = function(movieData) {
+		for(var i = movieData.length-1; i >= 0;i--) {
+			if(!!!movieData[i].own && !!!movieData[i].watch) {
+				movieData.splice(i,1);
+			}
+		}
+		return movieData;
+	}
+
 	//GET SAVED MOVIES - public end point to get all saved movies
 	this.getSavedMovies = function() {
 		return loadMovieData();
@@ -40,35 +50,30 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 		})
 
 		if(index > 0) {
-			if(movieObj.own != undefined) {
-				localMovieData[index].own = movieObj.own;
-			}
-			if(movieObj.watch != undefined) {
-				localMovieData[index].watch = movieObj.watch;
-			}
-			
+			localMovieData[index].own = !!movieObj.own;
+			localMovieData[index].watch = !!movieObj.watch;
 		} else {
 			localMovieData.push(movieObj);
 		}
-
+		// localMovieData = cleanData(localMovieData);
 		//Finally, save the data to local storage
 		localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(localMovieData));
-
+		console.log(localMovieData);
 	}
 
-	//DELETE MOVIE - remove movie by movieId	=	=	=
-	this.deleteMovie = function(movieId) {
-		//Get the local movie data
-		var localMovieData = loadMovieData();
-		//find the id in the array
-		var index = localMovieData.findIndex(function(element) {
-			element.id = movieObj.id;
-		})
-		if(index > 0) {
-			localMovieData.splice(index, 1);
-			localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(localMovieData));
-		}
-	}
+	// //DELETE MOVIE - remove movie by movieId	=	=	=
+	// this.deleteMovie = function(movieId) {
+	// 	//Get the local movie data
+	// 	var localMovieData = loadMovieData();
+	// 	//find the id in the array
+	// 	var index = localMovieData.findIndex(function(element) {
+	// 		element.id = movieObj.id;
+	// 	})
+	// 	if(index > 0) {
+	// 		localMovieData.splice(index, 1);
+	// 		localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(localMovieData));
+	// 	}
+	// }
 
 	//CLEAR SHELVES - remove all movieShelf		=	=	=
 	this.clearShelves = function() {

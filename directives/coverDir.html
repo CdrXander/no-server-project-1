@@ -13,13 +13,13 @@
 			</div>
 		</a>
 		<p> Year: {{movie.Year}}</p>
-		<button ng-if="movie.own" ng-click="addMovieToOwned(movie)" class="col-in">Owned</button>
+		<button ng-if="!!movie.own" ng-click="addMovieToOwned(movie)" class="col-in">Owned</button>
 		<button ng-if="!!!movie.own" ng-click="addMovieToOwned(movie)" class="col-out">Own?</button>
 		
 		<!-- <button ng-class="movie.own ? 'col-in' : 'col-out'" ng-click="addMovieToOwned(movie)">Own</button> -->
 
 
-		<button ng-if="movie.watch" ng-click="addMovieToWatch(movie)" class="col-in">Watch</button>
+		<button ng-if="!!movie.watch" ng-click="addMovieToWatch(movie)" class="col-in">Watch</button>
 		<button ng-if="!!!movie.watch" ng-click="addMovieToWatch(movie)" class="col-out">Watch?</button>
 	</span>
 </div>	

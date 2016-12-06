@@ -1,9 +1,14 @@
 <h1>Film Searches</h1>
 
 <section class="shelf-container">
-	<div class="shelf-border">
-		<input type="text" ng-model="searchTitle"/>
-		<button ng-click="searchForMovie()">Search</button>
+	<div class="transparent-shelf-border">
+		<div class="search-box">
+			<h3> Search for Movies by Title</h3>
+			<input type="text" ng-model="searchTitle" placeholder="Enter Movie Title..." />
+			<br/>
+			<button ng-click="searchForMovie()">Search</button>
+		</div>
+		
 	</div>
 	<div class="shelf-border">
 		<movie-display movies="movies" reload="reloadMovies()"></movie-display>

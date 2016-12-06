@@ -1,7 +1,7 @@
 /*
 *
 */
-angular.module('movieShelf', ['ui.router']).config(function($stateProvider, $urlRouterProvider) {
+angular.module('movieShelf', ['ui.router','ngAnimate']).config(function($stateProvider, $urlRouterProvider) {
 	
 
 	$stateProvider
@@ -21,4 +21,4 @@ angular.module('movieShelf', ['ui.router']).config(function($stateProvider, $url
 			controller: 'detailCtrl'
 		})
 
-});
+}).run();

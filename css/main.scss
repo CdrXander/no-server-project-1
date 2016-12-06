@@ -81,6 +81,18 @@ ul {
 	list-style-type: none;;
 }
 
+h3 {
+	text-transform: uppercase;
+}
+
+h1{
+	font-family: 'Arvo', serif;
+	color:white;
+	text-transform:uppercase;
+	text-align:center;
+	background-color:rgba(0,0,0,0.5);
+	overflow:visible;
+}
 
 
 /*CLASSES*/
@@ -111,7 +123,7 @@ ul {
 .shelf-border {
 	position:relative;
 	display:inline-block;
-	border:1px solid black;
+	border:1px solid white;
 	border-radius: 10px;
 	padding: 10px;
 	min-width: 170px;
@@ -208,6 +220,27 @@ ul {
 	border-radius: 5px;
 	background-color:$blu-ray-blue;
 	color:white;
+}
+
+.search-box { 
+
+	margin:auto;
+	min-width: 200px;
+	min-height: 250px;
+	background-color:#5A051C;
+	padding: 20px;
+
+	display:flex;
+	flex-direction: column;
+	justify-content:space-around;
+	align-items:center;
+
+	border-radius:5px;
+	border: 1px solid black;
+	h3 {
+		color:white;
+		margin:0;
+	}
 }
 
 // Short for "In Collection"
