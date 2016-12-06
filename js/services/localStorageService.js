@@ -10,7 +10,7 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 	// 					{imdbID:'tt0360717',Year:2005, own:false, watch:true,Rated:"PG-13",Title:"King Kong",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMjYxYmRlZWYtMzAwNC00MDA1LWJjNTItOTBjMzlhNGMzYzk3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"},
 	// 					{imdbID:'tt0108052',Year:1993, own:false, watch:true,Rated:"R",Title:"Schindler's List",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg"}
 	// 				]
-
+ 
 	//Eliminates the problem of dead data
 	var cleanData = function(movieData) {
 		for(var i = movieData.length-1; i >= 0;i--) {
