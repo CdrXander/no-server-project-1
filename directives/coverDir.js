@@ -13,7 +13,7 @@ angular.module('movieShelf').directive('movieDisplay', function(){
 			}
 			localStorageService.saveMovie(localMovie);
 			$scope.reload();
-		} 
+		}
 
 		//Add a film to the To_Watch_Movies array 
 		$scope.addMovieToWatch = function(movie) {

@@ -51,7 +51,7 @@ angular.module('movieShelf').service('localStorageService', function(omdbService
 			return element.imdbID == movieObj.imdbID;
 		})
 
-		if(index > 0) {
+		if(index >= 0) {
 			localMovieData[index].own = !!movieObj.own;
 			localMovieData[index].watch = !!movieObj.watch;
 		} else {
