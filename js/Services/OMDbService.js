@@ -4,7 +4,7 @@ angular.module('movieShelf').service('omdbService', function($http, $q){
     this.searchForMovie = function(title) {
       var deferred = $q.defer();
 
-      var url = 'http://www.omdbapi.com/?s=' + title +'&page=1';
+      var url = 'https://www.omdbapi.com/?s=' + title +'&page=1';
       $http.get(url)
         .success(function(response) {
           var searchResults = response.Search;
@@ -17,7 +17,7 @@ angular.module('movieShelf').service('omdbService', function($http, $q){
     this.getMovieDetails = function(id) {
       var deferred = $q.defer();
 
-      var url = "http://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
+      var url = "https://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
 
       $http.get(url)
         .success(function(response) {

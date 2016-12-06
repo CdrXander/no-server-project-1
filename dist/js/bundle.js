@@ -21,6 +21,87 @@ angular.module('movieShelf', ['ui.router', 'ngAnimate']).config(function ($state
 }).run();
 'use strict';
 
+angular.module('movieShelf').controller('detailCtrl', function ($scope, $stateParams, omdbService) {
+
+	omdbService.getMovieDetails($stateParams.id).then(function (serviceData) {
+		$scope.movie = serviceData;
+		console.log($scope.movie);
+	});
+});
+'use strict';
+
+angular.module('movieShelf').controller('mainCtrl', function ($scope) {
+	$scope.test = "Test Main Ctrl";
+});
+'use strict';
+
+angular.module('movieShelf').controller('searchCtrl', function ($scope, omdbService, localStorageService) {
+
+	$scope.reloadMovies = function () {
+		var savedMovies = localStorageService.getSavedMovies();
+		for (var i = 0; i < $scope.movies.length; i++) {
+			for (var j = 0; j < savedMovies.length; j++) {
+				if ($scope.movies[i].imdbID == savedMovies[j].imdbID) {
+					$scope.movies[i].own = savedMovies[j].own;
+					$scope.movies[i].watch = savedMovies[j].watch;
+					break;
+				}
+			}
+		}
+		// $scope.movies = $scope.movies
+	};
+
+	$scope.searchForMovie = function () {
+		omdbService.searchForMovie($scope.searchTitle).then(function (serviceData) {
+			$scope.movies = serviceData;
+			$scope.reloadMovies();
+		});
+	};
+});
+'use strict';
+
+angular.module('movieShelf').controller('shelfCtrl', function ($scope, omdbService, localStorageService) {
+
+	//Load the extended film data asynchronously
+	// var mergeData = function(localMovie) {
+	// 	omdbService.getMovieDetails(localMovie.id).then(function(omdbMovie) {
+	// 		var fullMovie = {};
+	// 		jQuery.extend(fullMovie, localMovie, omdbMovie);
+	// 		if(fullMovie.own === true) {
+	// 		$scope.ownedMovies.push(fullMovie);
+	// 		}
+	// 		if(fullMovie.watch === true) {
+	// 			$scope.watchMovies.push(fullMovie);
+	// 		}
+	// 	})
+	// }
+
+	//Initial load
+	$scope.loadMovieData = function () {
+		$scope.ownedMovies = [];
+		$scope.watchMovies = [];
+
+		var savedMovies = localStorageService.getSavedMovies();
+		for (var i = 0; i < savedMovies.length; i++) {
+			if (savedMovies[i].own === true) {
+				$scope.ownedMovies.push(savedMovies[i]);
+			}
+			if (savedMovies[i].watch === true) {
+				$scope.watchMovies.push(savedMovies[i]);
+			}
+
+			//			mergeData(savedMovies[i]);
+		}
+	};
+	$scope.loadMovieData();
+
+	$scope.clearShelves = function () {
+		localStorageService.clearShelves();
+		$scope.loadMovieData();
+	};
+});
+'use strict';
+
 angular.module('movieShelf').service('localStorageService', function (omdbService) {
 
 	var LOCAL_STORAGE_NAME = "movieList";
@@ -103,7 +184,7 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
   this.searchForMovie = function (title) {
     var deferred = $q.defer();
 
-    var url = 'http://www.omdbapi.com/?s=' + title + '&page=1';
+    var url = 'https://www.omdbapi.com/?s=' + title + '&page=1';
     $http.get(url).success(function (response) {
       var searchResults = response.Search;
       deferred.resolve(searchResults);
@@ -115,94 +196,13 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
   this.getMovieDetails = function (id) {
     var deferred = $q.defer();
 
-    var url = "http://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
+    var url = "https://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
 
     $http.get(url).success(function (response) {
       deferred.resolve(response);
     });
     return deferred.promise;
   };
-});
-'use strict';
-
-angular.module('movieShelf').controller('detailCtrl', function ($scope, $stateParams, omdbService) {
-
-	omdbService.getMovieDetails($stateParams.id).then(function (serviceData) {
-		$scope.movie = serviceData;
-		console.log($scope.movie);
-	});
-});
-'use strict';
-
-angular.module('movieShelf').controller('mainCtrl', function ($scope) {
-	$scope.test = "Test Main Ctrl";
-});
-'use strict';
-
-angular.module('movieShelf').controller('searchCtrl', function ($scope, omdbService, localStorageService) {
-
-	$scope.reloadMovies = function () {
-		var savedMovies = localStorageService.getSavedMovies();
-		for (var i = 0; i < $scope.movies.length; i++) {
-			for (var j = 0; j < savedMovies.length; j++) {
-				if ($scope.movies[i].imdbID == savedMovies[j].imdbID) {
-					$scope.movies[i].own = savedMovies[j].own;
-					$scope.movies[i].watch = savedMovies[j].watch;
-					break;
-				}
-			}
-		}
-		// $scope.movies = $scope.movies
-	};
-
-	$scope.searchForMovie = function () {
-		omdbService.searchForMovie($scope.searchTitle).then(function (serviceData) {
-			$scope.movies = serviceData;
-			$scope.reloadMovies();
-		});
-	};
-});
-'use strict';
-
-angular.module('movieShelf').controller('shelfCtrl', function ($scope, omdbService, localStorageService) {
-
-	//Load the extended film data asynchronously
-	// var mergeData = function(localMovie) {
-	// 	omdbService.getMovieDetails(localMovie.id).then(function(omdbMovie) {
-	// 		var fullMovie = {};
-	// 		jQuery.extend(fullMovie, localMovie, omdbMovie);
-	// 		if(fullMovie.own === true) {
-	// 		$scope.ownedMovies.push(fullMovie);
-	// 		}
-	// 		if(fullMovie.watch === true) {
-	// 			$scope.watchMovies.push(fullMovie);
-	// 		}
-	// 	})
-	// }
-
-	//Initial load
-	$scope.loadMovieData = function () {
-		$scope.ownedMovies = [];
-		$scope.watchMovies = [];
-
-		var savedMovies = localStorageService.getSavedMovies();
-		for (var i = 0; i < savedMovies.length; i++) {
-			if (savedMovies[i].own === true) {
-				$scope.ownedMovies.push(savedMovies[i]);
-			}
-			if (savedMovies[i].watch === true) {
-				$scope.watchMovies.push(savedMovies[i]);
-			}
-
-			//			mergeData(savedMovies[i]);
-		}
-	};
-	$scope.loadMovieData();
-
-	$scope.clearShelves = function () {
-		localStorageService.clearShelves();
-		$scope.loadMovieData();
-	};
 });
 'use strict';
 
