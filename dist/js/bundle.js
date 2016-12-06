@@ -106,7 +106,14 @@ angular.module('movieShelf').service('localStorageService', function (omdbServic
 
 	var LOCAL_STORAGE_NAME = "movieList";
 
-	var testData = [{ imdbID: 'tt0080684', Year: 1980, own: true, watch: false, Rated: "PG", Title: "Star Wars: Episode V - The Empire Strikes Back", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BYmViY2M2MTYtY2MzOS00YjQ1LWIzYmEtOTBiNjhlMGM0NjZjXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg" }, { imdbID: 'tt0848228', Year: 2012, own: true, watch: false, Rated: "PG-13", Title: "The Avengers", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg" }, { imdbID: 'tt1663662', Year: 2013, own: true, watch: true, Rated: "PG-13", Title: "Pacific Rim", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_SX300.jpg" }, { imdbID: 'tt1675434', Year: 2011, own: true, watch: true, Rated: "R", Title: "The Intouchables", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg" }, { imdbID: 'tt0360717', Year: 2005, own: false, watch: true, Rated: "PG-13", Title: "King Kong", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjYxYmRlZWYtMzAwNC00MDA1LWJjNTItOTBjMzlhNGMzYzk3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" }, { imdbID: 'tt0108052', Year: 1993, own: false, watch: true, Rated: "R", Title: "Schindler's List", Poster: "https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg" }];
+	// var testData = [
+	// 					{imdbID:'tt0080684',Year:1980, own:true, watch:false,Rated:"PG",Title:"Star Wars: Episode V - The Empire Strikes Back", Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BYmViY2M2MTYtY2MzOS00YjQ1LWIzYmEtOTBiNjhlMGM0NjZjXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg"},
+	// 					{imdbID:'tt0848228',Year:2012, own:true, watch:false,Rated:"PG-13",Title:"The Avengers",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SX300.jpg"},
+	// 					{imdbID:'tt1663662',Year:2013, own:true, watch:true,Rated:"PG-13",Title:"Pacific Rim",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_SX300.jpg"},
+	// 					{imdbID:'tt1675434',Year:2011, own:true, watch:true,Rated:"R",Title:"The Intouchables",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SX300.jpg"},
+	// 					{imdbID:'tt0360717',Year:2005, own:false, watch:true,Rated:"PG-13",Title:"King Kong",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMjYxYmRlZWYtMzAwNC00MDA1LWJjNTItOTBjMzlhNGMzYzk3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"},
+	// 					{imdbID:'tt0108052',Year:1993, own:false, watch:true,Rated:"R",Title:"Schindler's List",Poster:"https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTM4MDU2N15BMl5BanBnXkFtZTgwMzQ0MjMxMDE@._V1_SX300.jpg"}
+	// 				]
 
 	//Eliminates the problem of dead data
 	var cleanData = function cleanData(movieData) {
@@ -130,7 +137,9 @@ angular.module('movieShelf').service('localStorageService', function (omdbServic
 			localMovieData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NAME));
 		} else {
 			//TODO: CHANGE FOR PROD
-			localMovieData = testData;
+			// localMovieData = testData;
+
+			localMovieData = [];
 		}
 		return localMovieData;
 	};
@@ -184,7 +193,7 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
   this.searchForMovie = function (title) {
     var deferred = $q.defer();
 
-    var url = 'http://www.omdbapi.com/?s=' + title + '&page=1';
+    var url = 'https://www.omdbapi.com/?s=' + title + '&page=1';
     $http.get(url).success(function (response) {
       var searchResults = response.Search;
       deferred.resolve(searchResults);
@@ -196,7 +205,7 @@ angular.module('movieShelf').service('omdbService', function ($http, $q) {
   this.getMovieDetails = function (id) {
     var deferred = $q.defer();
 
-    var url = "http://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
+    var url = "https://www.omdbapi.com/?i=" + id + "&plot=full&r=json&tomatoes=true";
 
     $http.get(url).success(function (response) {
       deferred.resolve(response);
